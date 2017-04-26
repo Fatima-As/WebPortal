@@ -45,7 +45,7 @@
             <li><a href="deviceadd.php"><i class="fa fa-circle-o"></i> Add New Device</a></li>
           </ul>
         </li>
-        <li class="treeview <?php echo ($current == 'settings')?'active':''; ?>">
+        <!--li class="treeview <?php echo ($current == 'settings')?'active':''; ?>">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Settings</span>
             <span class="pull-right-container">
@@ -56,7 +56,7 @@
             <li><a href="settings.php"><i class="fa fa-circle-o"></i> Settings</a></li>
             <li><a href="settingadd.php"><i class="fa fa-circle-o"></i> Add New Setting</a></li>
           </ul>
-        </li>
+        </li-->
         <li class="treeview <?php echo ($current == 'managers')?'active':''; ?>">
           <a href="#">
             <i class="fa fa-table"></i> <span>Managers</span>

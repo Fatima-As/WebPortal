@@ -79,9 +79,9 @@ $(document).ready(function(){
                   
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#home"><label id="wallName" class="wallname">wall1</label></a></li>
-                        <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-                        <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-                        <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+                        <li><a data-toggle="tab" href="#menu1">Wall 2</a></li>
+                        <li><a data-toggle="tab" href="#menu2">Wall 3</a></li>
+                        <li><a data-toggle="tab" href="#menu3">Wall 4</a></li>
                     </ul>
 
                     
@@ -103,7 +103,7 @@ $(document).ready(function(){
 
                                          </div>
                                       </div-->
-                                      <input type="text"  id="xText" value=""/>
+                                      <!--input type="text"  id="xText" value=""/-->
                                         <div id="results"></div>
                                     <!--/div--> <!--./tabcontent>
                                                 
@@ -132,7 +132,7 @@ $(document).ready(function(){
                                 </div><!-- /.box-body -->
                                 <div class="box-footer">
                                     <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Save Wall</button>
-                                    <button>Return the top and left position of the p element</button>
+                                    <!--button>Return the top and left position of the p element</button-->
 
                                 </div>
                                 

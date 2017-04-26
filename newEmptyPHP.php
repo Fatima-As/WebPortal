@@ -22,17 +22,3 @@ if($query)
 	echo "Thank You for your registration, an email was sent to you with your information! .";
 }}
 ?>
-
-
-
-<h1>Registration</h1>
-<form name="registration"  method="POST">
-  <label for="username">Username: </label>
-  <input type="text" name="username"/>
-  <label for="password">Password: </label>
-  <input type="password" name="password"/>
-  <label for="email">Email: </label>
-  <input type="text" name="email"/>
-  <br/>
-  <button type="submit" name="signup">Submit</button>
- </form>
