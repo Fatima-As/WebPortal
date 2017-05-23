@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="results" style="position: relative"></div>
+        <div id="screen" class="screen" style="width:90px;height:90px;background-color: red;"></div>
+
+        <script>
+            $(document).ready(function(){
+            var cumulativeOffset = function(element) {
+    var top = 0, left = 0;
+    do {
+        top += element.offsetTop  || 0;
+        left += element.offsetLeft || 0;
+        element = element.offsetParent;
+    } while(element);
+
+    return {
+        top: top,
+        left: left
+    };
+     $('#results').text('X: ' + cumulativeOffset.left + ' ' + 'Y: ' + cumulativeOffset.top);
+};
+$('.screen').draggable({
+    start: function() {
+        coordinates('.screen');
+    },
+    stop: function() {
+        coordinates('.screen');
+    }
+}
+        </script>
+        
+    </body>
+</html>
