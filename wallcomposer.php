@@ -6,9 +6,82 @@ include('dbinc.php');
 	//$page = $_GET['page'];
 
 	include('header.php');
-        
-        
+     
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> <!--position-->
+<script type="text/javascript" src="bootstrap/js/jquery.js"></script><!--for confirm.-->
+<script type="text/javascript" src="bootstrap/js/bootstrap-tooltip.js"></script><!--for confirm.-->
+<script type="text/javascript" src="bootstrap/js/bootstrap-confirmation.js"></script><!--for confirm.-->
+    <!-- for dialog modal-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"  ></script>  
+    <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js" ></script>   
+    <link rel="stylesheet" id="themeStyles" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/> 
+              
+ 
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+        var x = $("#screen1").position();
+        alert("Top position: " + x.top + " Left position: " + x.left);
+    });
+});
+</script>
+<?php
+	include("menu.php");
+        ?>
+
+  <style>
+.device {
+	border:1px solid #666;
+	background-color:#CCC;
+	height:100px;
+	margin:3px;
+        padding: 0px;
+	
+}
+
+</style>
+      <style>
+            @import url('http://getbootstrap.com/2.3.2/assets/css/bootstrap.css');
+
+.container {
+    margin-top: 10px;
+   float:left;
+   width:1090px;
+   
+}
+
+.nav-tabs > li {
+    position:relative;
+    
+}
+
+.nav-tabs > li > a {
+    display:inline-block;
+}
+
+.nav-tabs > li > span {
+    display:none;
+    cursor:pointer;
+    position:absolute;
+    right: 6px;
+    top: 8px;
+    color: red;
+}
+
+
+.nav-tabs > li:hover > span {
+    display: inline-block;
+}
+#contact_01{
+    width:1020px;
+  
+}
+            
+        </style> <!-- for Tabs-->
+
+
+  
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"  ></script>  
     <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js" ></script>   
@@ -75,55 +148,6 @@ include('dbinc.php');
 	}
 
 ?>
-<style>
-.device {
-	border:1px solid #666;
-	background-color:#CCC;
-	height:100px;
-	margin:3px;
-        padding: 0px;
-	
-}
-
-</style>
-      <style>
-            @import url('http://getbootstrap.com/2.3.2/assets/css/bootstrap.css');
-
-.container {
-    margin-top: 10px;
-   float:left;
-   width:1090px;
-   
-}
-
-.nav-tabs > li {
-    position:relative;
-    
-}
-
-.nav-tabs > li > a {
-    display:inline-block;
-}
-
-.nav-tabs > li > span {
-    display:none;
-    cursor:pointer;
-    position:absolute;
-    right: 6px;
-    top: 8px;
-    color: red;
-}
-
-
-.nav-tabs > li:hover > span {
-    display: inline-block;
-}
-#contact_01{
-    width:1020px;
-  
-}
-            
-        </style> <!-- for Tabs-->
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
@@ -154,7 +178,7 @@ include('dbinc.php');
                        <ul class="nav nav-tabs">
                             <?php $walls = get_walls(); ?>
                             <?php foreach($walls as $wall) : ?>
-                        <li ><a href="#wall<?php echo $wall->id?>" data-toggle="tab"><?php echo $wall->name; ?></a><span>x</span></li>
+                           <li ><a href="?wallid=<?php echo$wall->id;?>#wall<?php echo $wall->id;?>" data-toggle="tab"><?php echo $wall->name; ?></a><span>x</span></li>
                         
                             <?php endforeach; ?>  
                         <li><a href="#" class="add-contact" data-toggle="tab">+ Add Wall</a></li>
@@ -167,8 +191,9 @@ include('dbinc.php');
                                  
                                     
                           <div class="tab-pane" id="wall<?php echo$wall->id; ?>">
+                             
                               <div id="canvas<?php echo$wall->id; ?>" style="  border:1px solid #ddd; background-color:#fafafa; width:800px; position: absolute;height:400px; float:left;">
-                              canvas<?php echo $wall->id?>
+                             
                                             
                      <?php $screens = get_screens(); ?>
                      <?php foreach($screens as $screen) : 
@@ -236,18 +261,15 @@ include('dbinc.php');
 
                                     <form name="form01" method="POST" enctype="multipart/form-data" >  
                                         <?php $screens = get_screens(); ?>
-        <?php
-        foreach($screens as $screen) : ?>
+                                        <?php foreach($screens as $screen) : ?>
                                         <input type="text" class="screenid" name="screensid[]" id="s<?php echo $screen->id; ?>" value="<?php echo $screen->id; ?>"/>
                                         <input type="text" class="screenTop" name="screensTop[]" id="screenTop<?php echo $screen->id; ?>"/>
                                         <input type="text" class="screenLeft" name="screensLeft[]" id="screenLeft<?php echo $screen->id; ?>"/>
-             <?php 
-            
-             endforeach; ?> 
+                                        <?php endforeach; ?> 
+                                        
                                      Wall Name:  <input type="text" id="textbox01" name="wallText"><br>   
                                      <button value="Save Wall" class="btn btn-primary" name="submit" onclick="sWall()"></button>
 
-                                 
                                     </form>
                                 </div><!--footer -->
 
@@ -256,40 +278,14 @@ include('dbinc.php');
                             </div><!-- /.box -->
                             
 
+        
                         </div><!--./col-->
                     </div><!--./Row-->
 
                 </section><!-- /.content -->
              </div><!-- ./wrapper -->
              
-            <form name="form1" method="POST" enctype="multipart/form-data" >  
-               <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
             
-           
-            <div class="modal-content">
-<!--                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Input Form</h4>
-                </div>-->
-                <div class="modal-body">
-<!--                   // Wall Name:  <input type="text" id="textbox1" name="wallText"><br>-->
-                    X-Position: <input type="text" id="textbox2" disabled/><br>
-                    Y-Position: <input type="text" id="textbox3" disabled/><br>
-
-                    
-                </div>
-<!--                <div class="modal-footer">
-                    <button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" name="wall" class="btn btn-primary" onclick="saveWall()">Save changes</button>
-                </div>-->
-            </div>
-            
-        </div>
-    </div>
-</form>  
-
 <!--             <form>
                      Wall Name:  <input type="text" id="textbox1" name="wallText"><br>
                     X-Position: <input type="text" id="textbox2" disabled/><br>
@@ -329,8 +325,8 @@ $(document).ready(function(){
     var left = element.position().left;
     //left=left-25;
     //top=top-70;
-   document.getElementById('textbox2').value=" "+left;
-   document.getElementById('textbox3').value=" "+top;
+  // document.getElementById('textbox2').value=" "+left;
+   //document.getElementById('textbox3').value=" "+top;
     $('#results').text('X: ' + left + ' ' + 'Y: ' + top);
 };
 $("#canvas").droppable();
@@ -364,7 +360,10 @@ function  sWall(){
 		
 	
   </script>
-
+<script>
+   
+<?php?>
+</script>
              <?php 
  
   if(isset($_POST["submit"])){
@@ -372,18 +371,28 @@ function  sWall(){
        $ids = $_POST["screensid"];
        $tops = $_POST["screensTop"];
        $lefts = $_POST["screensLeft"];
-        
+     if(isset($_GET['wallid']))
+     {
+       $wallid=intval($_GET['wallid']);
+         echo"<h1> $wallid</h1>";
+     
        for($i=0; $i<count($ids);$i++){
            $sid = $ids[$i];
            $stop = $tops[$i];
            $sleft = $lefts[$i];
-        $sql = "UPDATE screens SET X=$sleft,Y=$stop WHERE id=$sid";
-         mysqli_query($dbcon,$sql); 
+        $sql = "UPDATE screens SET X=$sleft,Y=$stop WHERE id=$sid and wallid=$wallid";
+             mysqli_query($dbcon,$sql); 
         
-
-       }
+   echo $sql;
+       }  }
       
        
+
+}
+
+ 
+ ?>
+<?php
  //     if(isset($_POST["saveW"])){
 //        $myname = $_POST["wallText"];
 //  
@@ -394,9 +403,4 @@ function  sWall(){
 //    echo "Records inserted successfully.";
 //} else{
 //    echo "ERROR: Could not able to execute $sql. " . mysqli_error($dbcon);
-//     }}
-
-}
-
- 
- ?>
+//     }}?>

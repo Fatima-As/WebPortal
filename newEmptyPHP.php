@@ -1,24 +1,26 @@
-<<<<<<< Upstream, based on origin/master
-<html>
-    <body>
-        <form name="form01" method="POST" enctype="multipart/form-data" >
-            <?php for($i=0 ;$i<4 ; $i++) { ?>
-            <input typre="text" name="inputs[]" value="<?php echo $i; ?>"/>
-            <?php }?>
-            <input type="submit" name="submit" value="submit">
-        </form>
-    </body>
-    
-</html>
 
 <?php
-if(isset ($_POST["submit"])){
-    
-        header("Location: http://www.yourwebsite.com/user.php"); /* Redirect browser */
-exit();
 
-}
+include 'dbinc.php';
 
+if(isset($_POST["signup"]))
+{
+ 
+$name = $_POST["username"];
+$email = $_POST["email"];
+$password = $_POST["password"];
+ 
+$name = mysqli_real_escape_string($dbcon, $name);
+$email = mysqli_real_escape_string($dbcon, $email);
+$password = mysqli_real_escape_string($dbcon, $password);
+$password = md5($password);
+
+
+$query = mysqli_query($dbcon, "INSERT INTO managers (username, password, email)VALUES ('$name', '$password', '$email')");
+
+if($query)
+{
+	echo "Thank You for your registration, an email was sent to you with your information! .";
+}}
 ?>
-
-
+>>>>>>> origin/master
