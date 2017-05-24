@@ -296,7 +296,21 @@ $(document).ready(function(){
                   
 
                                 </div><!-- /.box-header -->
-                                <div class="box-body" style="height:450px;">
+                                <div class="box-body" style="height:100px;">
+                                   <form name="form01" method="POST" enctype="multipart/form-data" >  
+                                        <input type="hidden" name="wid" id="wid"> 
+                                        <?php $screens = get_screens(); ?>
+                                        <?php foreach($screens as $screen) : ?>
+                                        <input type="hidden" class="screenid" name="screensid[]" id="s<?php echo $screen->wallid.$screen->id; ?>" value="<?php echo $screen->wallid.$screen->id; ?>"/>
+                                        <input type="hidden" class="screenTop" name="screensTop[]" id="screenTop<?php echo $screen->wallid.$screen->id; ?>"/>
+                                        <input type="hidden" class="screenLeft" name="screensLeft[]" id="screenLeft<?php echo $screen->wallid.$screen->id; ?>"/>
+                                        <?php endforeach; ?> 
+                                        
+                                     <!--Wall Name:  <input type="text" id="textbox01" name="wallText"><br>   -->
+                                     <button value="Save Wall" class="btn btn-primary" name="submit" onclick="sWall()">Save Wall</button>
+
+                                    </form> 
+                                    
                                     <!--div class="tab-content"-->
                                         
                                       <!--div id="home" class="tab-pane fade in active">
@@ -315,19 +329,6 @@ $(document).ready(function(){
                                 </div><!-- /.box-body -->
                                 <div class="box-footer">
 
-                                    <form name="form01" method="POST" enctype="multipart/form-data" >  
-                                        <input type="text" name="wid" id="wid"> 
-                                        <?php $screens = get_screens(); ?>
-                                        <?php foreach($screens as $screen) : ?>
-                                        <input type="text" class="screenid" name="screensid[]" id="s<?php echo $screen->wallid.$screen->id; ?>" value="<?php echo $screen->wallid.$screen->id; ?>"/>
-                                        <input type="text" class="screenTop" name="screensTop[]" id="screenTop<?php echo $screen->wallid.$screen->id; ?>"/>
-                                        <input type="text" class="screenLeft" name="screensLeft[]" id="screenLeft<?php echo $screen->wallid.$screen->id; ?>"/>
-                                        <?php endforeach; ?> 
-                                        
-                                     Wall Name:  <input type="text" id="textbox01" name="wallText"><br>   
-                                     <button value="Save Wall" class="btn btn-primary" name="submit" onclick="sWall()">Save Wall</button>
-
-                                    </form>
                                 </div><!--footer -->
 
                            
@@ -434,7 +435,8 @@ function  sWall(){
        $wallid=$_POST['wid'];
        $wallid = str_replace("#wall", "", $wallid);
         //echo'<script> alert("'.$wallid.'");</script>';
-     
+       
+       
        for($i=0; $i<count($ids);$i++){
            $sid = $ids[$i];//
            $stop = $tops[$i];
@@ -451,11 +453,49 @@ function  sWall(){
            // echo'<script> alert("swid==wllid");</script>';    
             $sql = "UPDATE screens SET X=$sleft,Y=$stop WHERE id=$sid and wallid=$swid";
             mysqli_query($dbcon,$sql); 
+           
+            
            }
    echo $sql;
          }
-      
+         
+          $sql = "Select * from screens wallid=$swid";
+          $result = mysqli_query($dbcon,$sql); 
+          $row = mysqli_fetch_assoc($result);
+         $wx= array();
+       $why= array();
        
+       foreach ($row as $sc){
+           if($sleft <=800){
+               $wx[] = $sc['X'];
+               $wx[] = $sc['X']+$sc['width'];
+               $wy[] = $sc['y'];
+               $wy[] = $sc['y']+$sc['height'];
+           }
+       }
+         
+         sort($wx);
+         sort($wy);
+         
+         echo'<script> alert("x='.$wx[0].'");</script>';
+         
+         $xstart = $wx[0];
+         $xend = $wx[sizeof($wx)-1];
+         $ystart = $wy[0];
+         $yend = $wy[sizeof($wy)-1];
+         $wwidth = $xend - $xstart;
+         $wheight = $yend - $ystart;
+         echo'<script> alert("w='.$wwidth.'h='.$wheight.'");</script>';
+         
+         $sql = "UPDATE `walls` SET `width`=$wwidth,`height`=$wheight WHERE `id`=$swid";
+         mysqli_query($dbcon,$sql); 
+         
+         $url='http://localhost/WebPortal/wallcomposer.php';
+   echo '<META HTTP-EQUIV=REFRESH CONTENT="1; '.$url.'">';
+         //header("Location: http://localhost/WebPortal/wallcomposer.php");
+         //exit();
+         
+      
 
 }
 
