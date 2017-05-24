@@ -23,14 +23,14 @@ include('dbinc.php');
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
   
-<script>
+<!--script>
 $(document).ready(function(){
     $("button").click(function(){
         var x = $("#screen1").position();
         alert("Top position: " + x.top + " Left position: " + x.left);
     });
 });
-</script>
+</script-->
 <?php
 	include("menu.php");
         
@@ -162,30 +162,7 @@ $(document).ready(function(){
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-                <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-            
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Adding Wall</h4>
-        </div>
-        <div class="modal-body">
-            <label>Wall Id:     </label><input type="text" id="wallNametxt"/><br>
-         <label>Wall Name:</label><input type="text" id="wallNametxt1"/>
-         
-        </div>
-        <div class="modal-footer">
-          <input type="button" id="btn" value="Add!" name="save" class="btn btn-default"/>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div><!--End of Modal-->
+                
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
@@ -234,15 +211,14 @@ $(document).ready(function(){
                                       
                      <?php $screens = get_screens(); ?>
                      <?php foreach($screens as $screen) : 
-           
-                          if($wall->id==$screen->wallid){?>
+                                     if($wall->id==$screen->wallid){?>
                               
-                            <div class="screen" name="screens" id="screen<?php echo $screen->id;?>" style=" margin:0px; padding:0px; position: absolute; top:<?php echo $screen->Y ?>px; left:<?php echo $screen->X ?>px; border:1px solid #ddd; background-color:#fafaaa; width: <?php echo $screen->width /6.5; ?>px; height: <?php echo $screen->height/6.5; ?>px;">
+                            <div class="screen" name="screens" id="screen<?php echo $screen->id;?>" style=" margin:0px; padding:0px; position: relative; top:<?php echo $screen->Y ?>px; left:<?php echo $screen->X ?>px; border:1px solid #ddd; background-color:#fafaaa; width: <?php echo $screen->width /6.5; ?>px; height: <?php echo $screen->height/6.5; ?>px;">
                             <?php echo $screen->name; ?><br />
             
                             <i class="fa fa-rotate-right rotate" data="#screen<?php echo $screen->id; ?>" style="cursor:pointer" onclick='javascript: rotate_screen("#screen<?php echo $screen->id; ?>");'></i>
                             </div><!--./screen-->
-          
+      
                      <?php } endforeach; ?>  
                                              
 
@@ -289,7 +265,7 @@ $(document).ready(function(){
                                          </div>
                                       </div-->
                                       <!--input type="text"  id="xText" value=""/-->
-                                        <div id="results"></div>
+                                   
                                     <!--/div--> <!--./tabcontent>
                                                 
                                   <!-- text input -->
@@ -362,22 +338,14 @@ $(document).ready(function(){
     element = $(element);
     var top = element.position().top;
     var left = element.position().left;
-    //left=left-25;
-    //top=top-70;
-  // document.getElementById('textbox2').value=" "+left;
-   //document.getElementById('textbox3').value=" "+top;
-    $('#results').text('X: ' + left + ' ' + 'Y: ' + top);
-};
+
+  };
 $("#canvas").droppable();
 
 $('.screen').draggable({
     start: function() {
-        coordinates('.screen');
-    },
-    stop: function() {
-        coordinates('.screen');
-    }
-});
+        coordinates('.screen');}, stop: function() {coordinates('.screen');}
+  });
 
 function  sWall(){
    
