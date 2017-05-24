@@ -41,8 +41,43 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <!--For Add wall Modal--> 
+  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
+<!-- Modal -->
+    <div class="modal fade" id="myModal"  style="position:fixed; top:0px; left:0px;   height: 2500px; width: 2500px; background: none; " role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+            
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Adding Wall</h4>
+        </div>
+        <div class="modal-body">
+            <label>Wall Id:     </label><input type="text" id="wallNametxt"/><br>
+         <label>Wall Name:</label><input type="text" id="wallNametxt1"/>
+         
+        </div>
+        <div class="modal-footer">
+          <input type="button" id="btn" value="Add!" name="save" class="btn btn-default"/>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div><!--End of Modal-->
 <div class="wrapper">
 
   <header class="main-header">

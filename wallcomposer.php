@@ -23,14 +23,14 @@ include('dbinc.php');
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
   
-<script>
+<!--script>
 $(document).ready(function(){
     $("button").click(function(){
         var x = $("#screen1").position();
         alert("Top position: " + x.top + " Left position: " + x.left);
     });
 });
-</script>
+</script-->
 <?php
 	include("menu.php");
         
@@ -162,30 +162,7 @@ $(document).ready(function(){
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-                <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-            
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Adding Wall</h4>
-        </div>
-        <div class="modal-body">
-            <label>Wall Id:     </label><input type="text" id="wallNametxt"/><br>
-         <label>Wall Name:</label><input type="text" id="wallNametxt1"/>
-         
-        </div>
-        <div class="modal-footer">
-          <input type="button" id="btn" value="Add!" name="save" class="btn btn-default"/>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div><!--End of Modal-->
+                
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
@@ -321,7 +298,7 @@ $(document).ready(function(){
                                          </div>
                                       </div-->
                                       <!--input type="text"  id="xText" value=""/-->
-                                        <div id="results"></div>
+                                   
                                     <!--/div--> <!--./tabcontent>
                                                 
                                   <!-- text input -->
@@ -381,22 +358,14 @@ $(document).ready(function(){
     element = $(element);
     var top = element.position().top;
     var left = element.position().left;
-    //left=left-25;
-    //top=top-70;
-  // document.getElementById('textbox2').value=" "+left;
-   //document.getElementById('textbox3').value=" "+top;
-    $('#results').text('X: ' + left + ' ' + 'Y: ' + top);
-};
+
+  };
 $("#canvas").droppable();
 
 $('.screen').draggable({
     start: function() {
-        coordinates('.screen');
-    },
-    stop: function() {
-        coordinates('.screen');
-    }
-});
+        coordinates('.screen');}, stop: function() {coordinates('.screen');}
+  });
 
 function  sWall(){
    
