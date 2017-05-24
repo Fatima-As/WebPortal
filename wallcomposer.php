@@ -14,12 +14,14 @@ include('dbinc.php');
 <script type="text/javascript" src="bootstrap/js/jquery.js"></script><!--for confirm.-->
 <script type="text/javascript" src="bootstrap/js/bootstrap-tooltip.js"></script><!--for confirm.-->
 <script type="text/javascript" src="bootstrap/js/bootstrap-confirmation.js"></script><!--for confirm.-->
-    <!-- for dialog modal-->
-    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"  ></script>  -->
-    <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js" ></script>   
-    <link rel="stylesheet" id="themeStyles" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/> 
-              
- 
+<script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js" ></script>   
+<link rel="stylesheet" id="themeStyles" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>   
+<!--For Add wall Modal--> 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
+  
 <script>
 $(document).ready(function(){
     $("button").click(function(){
@@ -97,7 +99,6 @@ $(document).ready(function(){
       e.preventDefault();
       $(this).tab('show');
       $('input[id="wid"]').val($(this).attr('href'));
-       //document.getElementById("wid").value= 'Active Tab is'+$(this).attr('href'));
     })
     .on("click", "span", function () {
         var anchor = $(this).siblings('a');
@@ -108,12 +109,13 @@ $(document).ready(function(){
        
     });
 
-    $('.add-contact').click(function(e) {
+    $('.add-wall').click(function(e) {
        
-        //e.preventDefault();
+        e.preventDefault();
+         
         var id = $(".nav-tabs").children().length; //think about it ;)
-        $(this).closest('li').before('<li><a href="#contact_'+id+'">New Tab</a><span>x</span></li>');         
-        $('.tab-content').append('<div class="tab-pane" id="contact_'+id+'">Contact Form: New Contact '+id+'</div>');
+        $(this).closest('li').before('<li><a href="#wall'+id+'">New Tab</a><span>x</span></li>');         
+        $('.tab-content').append('<div class="tab-pane" id="wall'+id+'">Contact Form: New Contact '+id+'</div>');
 });
     });
 
@@ -159,6 +161,30 @@ $(document).ready(function(){
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
+                <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+            
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Adding Wall</h4>
+        </div>
+        <div class="modal-body">
+            <label>Wall Id:     </label><input type="text" id="wallNametxt"/><br>
+         <label>Wall Name:</label><input type="text" id="wallNametxt1"/>
+         
+        </div>
+        <div class="modal-footer">
+          <input type="button" id="btn" value="Add!" name="save" class="btn btn-default"/>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div><!--End of Modal-->
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
@@ -187,14 +213,16 @@ $(document).ready(function(){
                             <?php $walls = get_walls(); ?>
                             <?php foreach($walls as $wall) : ?>
                            <li ><a href="#wall<?php echo $wall->id;?>" data-toggle="tab"><?php echo $wall->name; ?></a><span>x</span></li>
-                        
                             <?php endforeach; ?>  
-                        <li><a href="#" class="add-contact" data-toggle="tab">+ Add Wall</a></li>
+                           <!-- Trigger the modal with a button -->
+  
+  
+                           <li><a href="#" class="add-wall" data-toggle="tab"><button style="background:none;border:none;"  data-toggle="modal" data-target="#myModal">+ Add Wall</button></a></li>
                        </ul>
+                      
+  
                             <div class="tab-content">
-                                
-                                
-                                
+                                                                                                
                                <?php foreach($walls as $wall) : ?>
                                  
                                 
@@ -208,7 +236,7 @@ $(document).ready(function(){
            
                           if($wall->id==$screen->wallid){?>
                               
-                            <div class="screen" name="screens" id="screen<?php echo $screen->id;?>" style=" margin:0px; padding:0px; position: absolute; top:<?php echo $screen->Y ?>px; left:<?php echo $screen->X ?>px; border:1px solid #ddd; background-color:#fafaaa; width: <?php echo $screen->width / 6.5; ?>px; height: <?php echo $screen->height/6.5; ?>px; ">
+                            <div class="screen" name="screens" id="screen<?php echo $screen->id;?>" style=" margin:0px; padding:0px; position: absolute; top:<?php echo $screen->Y ?>px; left:<?php echo $screen->X ?>px; border:1px solid #ddd; background-color:#fafaaa; width: <?php echo $screen->width /6.5; ?>px; height: <?php echo $screen->height/6.5; ?>px;">
                             <?php echo $screen->name; ?><br />
             
                             <i class="fa fa-rotate-right rotate" data="#screen<?php echo $screen->id; ?>" style="cursor:pointer" onclick='javascript: rotate_screen("#screen<?php echo $screen->id; ?>");'></i>
@@ -278,7 +306,7 @@ $(document).ready(function(){
                                         <?php endforeach; ?> 
                                         
                                      Wall Name:  <input type="text" id="textbox01" name="wallText"><br>   
-                                     <button value="Save Wall" class="btn btn-primary" name="submit" onclick="sWall()"></button>
+                                     <button value="Save Wall" class="btn btn-primary" name="submit" onclick="sWall()">Save Wall</button>
 
                                     </form>
                                 </div><!--footer -->
