@@ -1,6 +1,8 @@
 <?php
 	//include('session.php');
 	//include('init.php');
+//if(isset($_GET['wallid'])) {
+  //      echo $_GET['wallid'];}
 include('dbinc.php');
 	$current = 'walls';
 	//$page = $_GET['page'];
@@ -8,12 +10,12 @@ include('dbinc.php');
 	include('header.php');
      
 ?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> <!--position-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> <!--position
 <script type="text/javascript" src="bootstrap/js/jquery.js"></script><!--for confirm.-->
 <script type="text/javascript" src="bootstrap/js/bootstrap-tooltip.js"></script><!--for confirm.-->
 <script type="text/javascript" src="bootstrap/js/bootstrap-confirmation.js"></script><!--for confirm.-->
     <!-- for dialog modal-->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"  ></script>  
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"  ></script>  -->
     <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js" ></script>   
     <link rel="stylesheet" id="themeStyles" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/> 
               
@@ -28,6 +30,8 @@ $(document).ready(function(){
 </script>
 <?php
 	include("menu.php");
+        
+        
         ?>
 
   <style>
@@ -83,26 +87,30 @@ $(document).ready(function(){
 
   
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"  ></script>  
-    <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js" ></script>   
-    <link rel="stylesheet" id="themeStyles" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/> 
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"  ></script> 
+    <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js" ></script> 
+    <link rel="stylesheet" id="themeStyles" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>  
               
   <script>
     $(document).ready(function() {       
     $(".nav-tabs").on("click", "a", function(e){
       e.preventDefault();
       $(this).tab('show');
+      $('input[id="wid"]').val($(this).attr('href'));
+       //document.getElementById("wid").value= 'Active Tab is'+$(this).attr('href'));
     })
     .on("click", "span", function () {
         var anchor = $(this).siblings('a');
         $(anchor.attr('href')).remove();
+        
         $(this).parent().remove();
         $(".nav-tabs li").children('a').first().click();
+       
     });
 
     $('.add-contact').click(function(e) {
        
-        e.preventDefault();
+        //e.preventDefault();
         var id = $(".nav-tabs").children().length; //think about it ;)
         $(this).closest('li').before('<li><a href="#contact_'+id+'">New Tab</a><span>x</span></li>');         
         $('.tab-content').append('<div class="tab-pane" id="contact_'+id+'">Contact Form: New Contact '+id+'</div>');
@@ -178,7 +186,7 @@ $(document).ready(function(){
                        <ul class="nav nav-tabs">
                             <?php $walls = get_walls(); ?>
                             <?php foreach($walls as $wall) : ?>
-                           <li ><a href="?wallid=<?php echo$wall->id;?>#wall<?php echo $wall->id;?>" data-toggle="tab"><?php echo $wall->name; ?></a><span>x</span></li>
+                           <li ><a href="#wall<?php echo $wall->id;?>" data-toggle="tab"><?php echo $wall->name; ?></a><span>x</span></li>
                         
                             <?php endforeach; ?>  
                         <li><a href="#" class="add-contact" data-toggle="tab">+ Add Wall</a></li>
@@ -189,12 +197,12 @@ $(document).ready(function(){
                                 
                                <?php foreach($walls as $wall) : ?>
                                  
-                                    
+                                
                           <div class="tab-pane" id="wall<?php echo$wall->id; ?>">
                              
                               <div id="canvas<?php echo$wall->id; ?>" style="  border:1px solid #ddd; background-color:#fafafa; width:800px; position: absolute;height:400px; float:left;">
                              
-                                            
+                                      
                      <?php $screens = get_screens(); ?>
                      <?php foreach($screens as $screen) : 
            
@@ -210,7 +218,8 @@ $(document).ready(function(){
                                              
 
     
-                                 </div><!--canvas-->       
+                                 </div><!--canvas-->    
+                                 
                                 </div><!--Tab end-->
                              
                              <?php endforeach; ?>      
@@ -260,6 +269,7 @@ $(document).ready(function(){
                                 <div class="box-footer">
 
                                     <form name="form01" method="POST" enctype="multipart/form-data" >  
+                                        <input type="text" name="wid" id="wid"> 
                                         <?php $screens = get_screens(); ?>
                                         <?php foreach($screens as $screen) : ?>
                                         <input type="text" class="screenid" name="screensid[]" id="s<?php echo $screen->id; ?>" value="<?php echo $screen->id; ?>"/>
@@ -371,10 +381,9 @@ function  sWall(){
        $ids = $_POST["screensid"];
        $tops = $_POST["screensTop"];
        $lefts = $_POST["screensLeft"];
-     if(isset($_GET['wallid']))
-     {
-       $wallid=intval($_GET['wallid']);
-         echo"<h1> $wallid</h1>";
+       $wallid=$_POST['wid'];
+       $wallid = str_replace("#wall", "", $wallid);
+        echo'<script> alert("'.$wallid.'");</script>';
      
        for($i=0; $i<count($ids);$i++){
            $sid = $ids[$i];
@@ -384,7 +393,7 @@ function  sWall(){
              mysqli_query($dbcon,$sql); 
         
    echo $sql;
-       }  }
+         }
       
        
 
