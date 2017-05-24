@@ -423,7 +423,7 @@ function  sWall(){
            }
            
            ?>
-             <?php 
+<?php 
  
   if(isset($_POST["submit"])){
       
@@ -444,17 +444,3 @@ function  sWall(){
          }  
 }
  ?>
-
-
-<?php
- //     if(isset($_POST["saveW"])){
-//        $myname = $_POST["wallText"];
-//  
-//       $myname= mysqli_real_escape_string($dbcon,$myname);
-//    $sql = "INSERT INTO walls (name, width, height) VALUES ('$myname', 65, 49)";
-//mysqli_query($dbcon,$sql); 
-//        if(mysqli_query($dbcon, $sql)){
-//    echo "Records inserted successfully.";
-//} else{
-//    echo "ERROR: Could not able to execute $sql. " . mysqli_error($dbcon);
-//     }}?>
