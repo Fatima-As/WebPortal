@@ -208,7 +208,7 @@ $(document).ready(function(){
            
                           if($wall->id==$screen->wallid){?>
                               
-                            <div class="screen" name="screens" id="screen<?php echo $screen->id;?>" style=" margin:0px; padding:0px; position: absolute; top:<?php echo $screen->Y ?>px; left:<?php echo $screen->X ?>px; border:1px solid #ddd; background-color:#fafaaa; width: <?php echo $screen->width * 2; ?>px; height: <?php echo $screen->height * 1.5; ?>px; ">
+                            <div class="screen" name="screens" id="screen<?php echo $screen->id;?>" style=" margin:0px; padding:0px; position: absolute; top:<?php echo $screen->Y ?>px; left:<?php echo $screen->X ?>px; border:1px solid #ddd; background-color:#fafaaa; width: <?php echo $screen->width / 6.5; ?>px; height: <?php echo $screen->height/6.5; ?>px; ">
                             <?php echo $screen->name; ?><br />
             
                             <i class="fa fa-rotate-right rotate" data="#screen<?php echo $screen->id; ?>" style="cursor:pointer" onclick='javascript: rotate_screen("#screen<?php echo $screen->id; ?>");'></i>
