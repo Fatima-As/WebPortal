@@ -10,6 +10,7 @@ include('dbinc.php');
 	include('header.php');
      
 ?>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> <!--position
 <script type="text/javascript" src="bootstrap/js/jquery.js"></script><!--for confirm.-->
 <script type="text/javascript" src="bootstrap/js/bootstrap-tooltip.js"></script><!--for confirm.-->
