@@ -244,16 +244,35 @@ $(document).ready(function(){
                              
                                       
                      <?php $screens = get_screens(); ?>
-                     <?php foreach($screens as $screen) : 
-                                     if($wall->id==$screen->wallid){?>
-                              
-                            <div class="screen" name="screens" id="screen<?php echo $screen->id;?>" style=" margin:0px; padding:0px; position: relative; top:<?php echo $screen->Y ?>px; left:<?php echo $screen->X ?>px; border:1px solid #ddd; background-color:#fafaaa; width: <?php echo $screen->width /6.5; ?>px; height: <?php echo $screen->height/6.5; ?>px;">
+                     <?php 
+                     $sideTop= 17;
+                     $sidLeft = 960;
+                     foreach($screens as $screen) : 
+                            
+                          if($wall->id==$screen->wallid){
+                               if($screen->X>800){
+                             ?>
+                             <div class="screen" name="screens" id="screen<?php echo $screen->wallid.$screen->id;?>" style=" margin:0px; padding:0px; position: absolute; top:<?php echo $sideTop; ?>px; left:<?php echo $sidLeft; ?>px; border:1px solid #ddd; background-color:#fafaaa; width: <?php echo $screen->width /6.5; ?>px; height: <?php echo $screen->height/6.5; ?>px;">
                             <?php echo $screen->name; ?><br />
             
                             <i class="fa fa-rotate-right rotate" data="#screen<?php echo $screen->id; ?>" style="cursor:pointer" onclick='javascript: rotate_screen("#screen<?php echo $screen->id; ?>");'></i>
                             </div><!--./screen-->
-      
-                     <?php } endforeach; ?>  
+                        <?php $sideTop= $sideTop+ $screen->height/6.5 + 10;
+                        
+                         }else{
+                              ?>
+                             
+                               
+                            <div class="screen" name="screens" id="screen<?php echo $screen->wallid.$screen->id;?>"style=" margin:0px; padding:0px; position: absolute; top:<?php echo $screen->Y ?>px; left:<?php echo $screen->X ?>px; border:1px solid #ddd; background-color:#fafaaa; width: <?php echo $screen->width /6.5; ?>px; height: <?php echo $screen->height/6.5; ?>px;">
+                            <?php echo $screen->name; ?><br />
+            
+                            <i class="fa fa-rotate-right rotate" data="#screen<?php echo $screen->id; ?>" style="cursor:pointer" onclick='javascript: rotate_screen("#screen<?php echo $screen->id; ?>");'></i>
+                            </div><!--./screen-->
+          
+                         <?php }
+                         
+                         }
+                     endforeach; ?>  
                                              
 
     
@@ -265,11 +284,11 @@ $(document).ready(function(){
                         
                         
                             </div><!-- TabContent End-->      
-                            
-                  </div><!--Container End-->
-      <div id="devices" style="margin-left:20px; padding:0px; border:1px solid #ddd; background-color:#fff; width:200px; height:400px; float:left;">
+                   <div id="devices" style="margin-left:20px; padding:0px; border:1px solid #ddd; background-color:#fff; width:200px; height:500px; float:right;">
         	
-      </div> <!--devices-->
+      </div> <!--devices-->         
+                  </div><!--Container End-->
+      
 
                                  <div style="clear:both;"></div>
                                  
@@ -288,7 +307,21 @@ $(document).ready(function(){
                   
 
                                 </div><!-- /.box-header -->
-                                <div class="box-body" style="height:450px;">
+                                <div class="box-body" style="height:100px;">
+                                   <form name="form01" method="POST" enctype="multipart/form-data" >  
+                                        <input type="hidden" name="wid" id="wid"> 
+                                        <?php $screens = get_screens(); ?>
+                                        <?php foreach($screens as $screen) : ?>
+                                        <input type="hidden" class="screenid" name="screensid[]" id="s<?php echo $screen->wallid.$screen->id; ?>" value="<?php echo $screen->wallid.$screen->id; ?>"/>
+                                        <input type="hidden" class="screenTop" name="screensTop[]" id="screenTop<?php echo $screen->wallid.$screen->id; ?>"/>
+                                        <input type="hidden" class="screenLeft" name="screensLeft[]" id="screenLeft<?php echo $screen->wallid.$screen->id; ?>"/>
+                                        <?php endforeach; ?> 
+                                        
+                                     <!--Wall Name:  <input type="text" id="textbox01" name="wallText"><br>   -->
+                                     <button value="Save Wall" class="btn btn-primary" name="submit" onclick="sWall()">Save Wall</button>
+
+                                    </form> 
+                                    
                                     <!--div class="tab-content"-->
                                         
                                       <!--div id="home" class="tab-pane fade in active">
@@ -307,19 +340,6 @@ $(document).ready(function(){
                                 </div><!-- /.box-body -->
                                 <div class="box-footer">
 
-                                    <form name="form01" method="POST" enctype="multipart/form-data" >  
-                                        <input type="text" name="wid" id="wid"> 
-                                        <?php $screens = get_screens(); ?>
-                                        <?php foreach($screens as $screen) : ?>
-                                        <input type="text" class="screenid" name="screensid[]" id="s<?php echo $screen->id; ?>" value="<?php echo $screen->id; ?>"/>
-                                        <input type="text" class="screenTop" name="screensTop[]" id="screenTop<?php echo $screen->id; ?>"/>
-                                        <input type="text" class="screenLeft" name="screensLeft[]" id="screenLeft<?php echo $screen->id; ?>"/>
-                                        <?php endforeach; ?> 
-                                        
-                                     Wall Name:  <input type="text" id="textbox01" name="wallText"><br>   
-                                     <button value="Save Wall" class="btn btn-primary" name="submit" onclick="sWall()">Save Wall</button>
-
-                                    </form>
                                 </div><!--footer -->
 
                            
@@ -383,16 +403,19 @@ $('.screen').draggable({
 
 function  sWall(){
    
-      var scrrenN = document.getElementsByName("screens");
+      var scrrenN = document.getElementsByName("screens");//the screens dives 
         //alert(scrrenN[0].id);
-       
+ 
         for (var i=0; i<scrrenN.length; i++){
+           // alert(i);
         var x = $("#"+scrrenN[i].id).position();
-       // alert(i +" Top position: " + x.top + " Left position: " + x.left);
+        //alert(scrrenN[i].id +" Top position: " + x.top + " Left position: " + x.left);
+        //alert(scrrenN[i].id.toString().substring(6));
+        
         document.getElementById('screenTop'+scrrenN[i].id.toString().substring(6)).value=" "+x.top;
         document.getElementById('screenLeft'+scrrenN[i].id.toString().substring(6)).value=" "+x.left;
         
-             }
+        }
         
  
 
@@ -435,12 +458,64 @@ function  sWall(){
         
      
        for($i=0; $i<count($ids);$i++){
-           $sid = $ids[$i];
+           $sid = $ids[$i];//
            $stop = $tops[$i];
            $sleft = $lefts[$i];
-        $sql = "UPDATE screens SET X=$sleft,Y=$stop WHERE id=$sid and wallid=$wallid";
-             mysqli_query($dbcon,$sql); 
-        
-         }  
+           //echo'<script> alert("sid'.$sid.'");</script>';
+           $swid = substr_replace($sid."", "", -1);
+           //echo'<script> alert("swid'.$swid.'");</script>';
+           
+           $sid = substr($sid."", 1);
+           //echo'<script> alert("sid'.$sid.'");</script>';
+           //echo'<script> alert("wall'.$swid.'screen'.$sid.'");</script>';
+           if( $swid == $wallid){
+          //  echo'<script> alert("'.$ids[$i].'");</script>';
+           // echo'<script> alert("swid==wllid");</script>';    
+            $sql = "UPDATE screens SET X=$sleft,Y=$stop WHERE id=$sid and wallid=$swid";
+            mysqli_query($dbcon,$sql); 
+           
+            
+           }
+   echo $sql;
+         }
+         
+          $sql = "Select * from screens wallid=$swid";
+          $result = mysqli_query($dbcon,$sql); 
+          $row = mysqli_fetch_assoc($result);
+         $wx= array();
+       $why= array();
+       
+       foreach ($row as $sc){
+           if($sleft <=800){
+               $wx[] = $sc['X'];
+               $wx[] = $sc['X']+$sc['width'];
+               $wy[] = $sc['y'];
+               $wy[] = $sc['y']+$sc['height'];
+           }
+       }
+         
+         sort($wx);
+         sort($wy);
+         
+         echo'<script> alert("x='.$wx[0].'");</script>';
+         
+         $xstart = $wx[0];
+         $xend = $wx[sizeof($wx)-1];
+         $ystart = $wy[0];
+         $yend = $wy[sizeof($wy)-1];
+         $wwidth = $xend - $xstart;
+         $wheight = $yend - $ystart;
+         echo'<script> alert("w='.$wwidth.'h='.$wheight.'");</script>';
+         
+         $sql = "UPDATE `walls` SET `width`=$wwidth,`height`=$wheight WHERE `id`=$swid";
+         mysqli_query($dbcon,$sql); 
+         
+         $url='http://localhost/WebPortal/wallcomposer.php';
+   echo '<META HTTP-EQUIV=REFRESH CONTENT="1; '.$url.'">';
+         //header("Location: http://localhost/WebPortal/wallcomposer.php");
+         //exit();
+         
+      
+
 }
  ?>
