@@ -479,14 +479,14 @@ function  sWall(){
    echo $sql;
          }
          
-          $sql = "Select * from screens wallid=$swid";
+          $sql = "Select * from screens where wallid=$swid";
           $result = mysqli_query($dbcon,$sql); 
           $row = mysqli_fetch_assoc($result);
          $wx= array();
        $why= array();
        
        foreach ($row as $sc){
-           if($sleft <=800){
+           if( $sc['X'] <=800){
                $wx[] = $sc['X'];
                $wx[] = $sc['X']+$sc['width'];
                $wy[] = $sc['y'];
