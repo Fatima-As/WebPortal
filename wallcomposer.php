@@ -32,9 +32,7 @@ $(document).ready(function(){
 });
 </script-->
 <?php
-	include("menu.php");
-        
-        
+	include("menu.php");    
         ?>
 
   <style>
@@ -80,9 +78,10 @@ $(document).ready(function(){
 .nav-tabs > li:hover > span {
     display: inline-block;
 }
-#contact_01{
-    width:1020px;
-  
+
+#modalErr{
+    color: red;
+    display: none;
 }
             
         </style> <!-- for Tabs-->
@@ -107,7 +106,6 @@ $(document).ready(function(){
         
         $(this).parent().remove();
         $(".nav-tabs li").children('a').first().click();
-       
     });
 
     $('.add-wall').click(function(e) {
@@ -117,7 +115,8 @@ $(document).ready(function(){
         var id = $(".nav-tabs").children().length; //think about it ;)
         $(this).closest('li').before('<li><a href="#wall'+id+'">New Tab</a><span>x</span></li>');         
         $('.tab-content').append('<div class="tab-pane" id="wall'+id+'">Contact Form: New Contact '+id+'</div>');
-});
+    });
+    
     });
 
     </script>
@@ -159,7 +158,43 @@ $(document).ready(function(){
 	}
 
 ?>
-
+    <script>
+    function AddWall(){
+        var wid = document.getElementById("wallIdtxt").value;
+        var wname = document.getElementById("wallNametxt").value;
+       if(wid=="" || wname=="")
+       {
+           document.getElementById("modalErr").style.display = 'block';
+       }  
+     
+    }    
+    </script>
+<!-- Modal -->
+    <div class="modal fade" id="myModal" data-backdrop="static" style="position:fixed; top:0px; left:0px;   height: 2350px; width: 2300px; background: none; " role="dialog">
+        <div class="modal-dialog" style="top:200px;">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+          <form name="form02" method="POST" onsubmit="return AddWall()" enctype="multipart/form-data" action="" >
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Adding Wall</h4>
+        </div>
+        <div class="modal-body">
+            <label>Wall Id:     </label><input type="text" name="wallIdtxt" id="wallIdtxt"/><br>
+         <label>Wall Name:</label><input type="text" name="wallNametxt" id="wallNametxt"/>
+         <br><span id="modalErr">Important Information is missing to Add a New Wall!</span>
+        </div>
+        <div class="modal-footer">
+            
+            <button type="submit" id="btn"  name="AddMyWall" class="btn btn-default" onclick="AddWall()">Add</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+          </form>
+      </div>
+      
+    </div>
+  </div><!--End of Modal-->
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 
@@ -194,8 +229,7 @@ $(document).ready(function(){
                             <?php endforeach; ?>  
                            <!-- Trigger the modal with a button -->
   
-  
-                           <li><a href="#" class="add-wall" data-toggle="tab"><button style="background:none;border:none;"  data-toggle="modal" data-target="#myModal">+ Add Wall</button></a></li>
+                             <li><a href="#" class="add-wall" data-toggle="tab"><button style="background:none;border:none;"  data-toggle="modal" data-target="#myModal">+ Add Wall</button></a></li>
                        </ul>
                       
   
@@ -390,11 +424,29 @@ function  sWall(){
 		
 	
   </script>
-<script>
-   
-<?php?>
-</script>
-             <?php 
+
+  <?php
+           if(isset($_POST["AddMyWall"]))
+           {
+              
+               $wid=$_POST["wallIdtxt"];
+               $wname=$_POST["wallNametxt"];
+               
+            $sql="Insert Into walls (id, name, status, width, height) values ('$wid','$wname','Active',0,0)";
+             mysqli_query($dbcon,$sql);
+             
+             for ($i=1;$i<=1;$i++)
+             {
+             $sql1="Insert Into screens (id, name, width, height, orientation, X, Y, Wallid) values ('$i','screen.$i',935,525, 'H',900,0,'$wid')";
+                        mysqli_query($dbcon,$sql1);
+                        }
+           $url='http://localhost/WebPortal/wallcomposer.php';
+   echo '<META HTTP-EQUIV=REFRESH CONTENT="1; '.$url.'">';
+
+           }
+           
+           ?>
+<?php 
  
   if(isset($_POST["submit"])){
       
@@ -403,9 +455,8 @@ function  sWall(){
        $lefts = $_POST["screensLeft"];
        $wallid=$_POST['wid'];
        $wallid = str_replace("#wall", "", $wallid);
-        //echo'<script> alert("'.$wallid.'");</script>';
-       
-       
+        
+     
        for($i=0; $i<count($ids);$i++){
            $sid = $ids[$i];//
            $stop = $tops[$i];
@@ -479,18 +530,4 @@ function  sWall(){
       
 
 }
-
- 
  ?>
-<?php
- //     if(isset($_POST["saveW"])){
-//        $myname = $_POST["wallText"];
-//  
-//       $myname= mysqli_real_escape_string($dbcon,$myname);
-//    $sql = "INSERT INTO walls (name, width, height) VALUES ('$myname', 65, 49)";
-//mysqli_query($dbcon,$sql); 
-//        if(mysqli_query($dbcon, $sql)){
-//    echo "Records inserted successfully.";
-//} else{
-//    echo "ERROR: Could not able to execute $sql. " . mysqli_error($dbcon);
-//     }}?>
