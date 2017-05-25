@@ -216,7 +216,7 @@ $(document).ready(function(){
                      foreach($screens as $screen) : 
                             
                           if($wall->id==$screen->wallid){
-                               if($screen->X>800){
+                               if($screen->X>800*6.5){
                              ?>
                              <div class="screen" name="screens" id="screen<?php echo $screen->wallid.$screen->id;?>" style=" margin:0px; padding:0px; position: absolute; top:<?php echo $sideTop; ?>px; left:<?php echo $sidLeft; ?>px; border:1px solid #ddd; background-color:#fafaaa; width: <?php echo $screen->width /6.5; ?>px; height: <?php echo $screen->height/6.5; ?>px;">
                             <?php echo $screen->name; ?><br />
@@ -229,7 +229,7 @@ $(document).ready(function(){
                               ?>
                              
                                
-                            <div class="screen" name="screens" id="screen<?php echo $screen->wallid.$screen->id;?>"style=" margin:0px; padding:0px; position: absolute; top:<?php echo $screen->Y ?>px; left:<?php echo $screen->X ?>px; border:1px solid #ddd; background-color:#fafaaa; width: <?php echo $screen->width /6.5; ?>px; height: <?php echo $screen->height/6.5; ?>px;">
+                            <div class="screen" name="screens" id="screen<?php echo $screen->wallid.$screen->id;?>"style=" margin:0px; padding:0px; position: absolute; top:<?php echo $screen->Y/6.5 ?>px; left:<?php echo $screen->X/6.5 ?>px; border:1px solid #ddd; background-color:#fafaaa; width: <?php echo $screen->width /6.5; ?>px; height: <?php echo $screen->height/6.5; ?>px;">
                             <?php echo $screen->name; ?><br />
             
                             <i class="fa fa-rotate-right rotate" data="#screen<?php echo $screen->id; ?>" style="cursor:pointer" onclick='javascript: rotate_screen("#screen<?php echo $screen->id; ?>");'></i>
@@ -409,7 +409,10 @@ function  sWall(){
        for($i=0; $i<count($ids);$i++){
            $sid = $ids[$i];//
            $stop = $tops[$i];
+           $stop = $stop*6.5;
+           //echo'<script> alert("stop'.$stop.'");</script>';
            $sleft = $lefts[$i];
+           $sleft = $sleft*6.5;
            //echo'<script> alert("sid'.$sid.'");</script>';
            $swid = substr_replace($sid."", "", -1);
            //echo'<script> alert("swid'.$swid.'");</script>';
@@ -427,36 +430,45 @@ function  sWall(){
            }
    echo $sql;
          }
-         
-          $sql = "Select * from screens wallid=$swid";
+        // echo'<script> alert("w='.$wallid.'");</script>';
+          $sql = "Select * from screens where wallid=$wallid";
           $result = mysqli_query($dbcon,$sql); 
-          $row = mysqli_fetch_assoc($result);
+          //$row = mysqli_fetch_array($result);
          $wx= array();
        $why= array();
        
-       foreach ($row as $sc){
-           if($sleft <=800){
+       while ($sc= mysqli_fetch_array($result)){
+           
+           
+           if($sc['X'] <=800*6.5){
+               //echo'<script> alert("x<800");</script>';
                $wx[] = $sc['X'];
+               
                $wx[] = $sc['X']+$sc['width'];
-               $wy[] = $sc['y'];
-               $wy[] = $sc['y']+$sc['height'];
+               //echo'<script> alert("x1='.$sc['X'].'-'.$sc['width'].'");</script>';
+               $wy[] = $sc['Y'];
+             // echo'<script> alert("y='.$sc['Y'].'");</script>';
+               $wy[] = $sc['Y']+$sc['height'];
+               //echo'<script> alert("y='.$sc['Y'].'+'.$sc['height'].'");</script>';
            }
        }
          
          sort($wx);
          sort($wy);
          
-         echo'<script> alert("x='.$wx[0].'");</script>';
+        // echo'<script> alert("calculate");</script>';
          
          $xstart = $wx[0];
          $xend = $wx[sizeof($wx)-1];
          $ystart = $wy[0];
          $yend = $wy[sizeof($wy)-1];
+         //echo'<script> alert("xstart='.$xstart.'xend='.$xend.'");</script>';
+         //echo'<script> alert("ystart='.$ystart.'yend='.$yend.'");</script>';
          $wwidth = $xend - $xstart;
          $wheight = $yend - $ystart;
-         echo'<script> alert("w='.$wwidth.'h='.$wheight.'");</script>';
+         //echo'<script> alert("w='.$wwidth.'h='.$wheight.'");</script>';
          
-         $sql = "UPDATE `walls` SET `width`=$wwidth,`height`=$wheight WHERE `id`=$swid";
+         $sql = "UPDATE `walls` SET `width`=$wwidth,`height`=$wheight, `X`=$xstart, `Y`=$ystart WHERE `id`=$wallid";
          mysqli_query($dbcon,$sql); 
          
          $url='http://localhost/WebPortal/wallcomposer.php';
