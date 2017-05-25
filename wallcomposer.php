@@ -432,14 +432,18 @@ function  sWall(){
                $wid=$_POST["wallIdtxt"];
                $wname=$_POST["wallNametxt"];
                
-            $sql="Insert Into walls (id, name, status, width, height) values ('$wid','$wname','Active',0,0)";
+            $sql="Insert Into walls (id, name, status, width, height, X, Y) values ('$wid','$wname','Active',0,0,0,0)";
              mysqli_query($dbcon,$sql);
+                          
+             $sql1="Insert Into screens (id, name, width, height, orientation, X, Y, Wallid) values ('1','screen1',935,525, 'H',900,0,'$wid')";
+             $sql2="Insert Into screens (id, name, width, height, orientation, X, Y, Wallid) values ('2','screen2',935,525, 'H',900,0,'$wid')";
+             $sql3="Insert Into screens (id, name, width, height, orientation, X, Y, Wallid) values ('3','screen3',1110,525, 'H',900,0,'$wid')";
+             $sql4="Insert Into screens (id, name, width, height, orientation, X, Y, Wallid) values ('4','screen4',1110,525, 'H',900,0,'$wid')";
              
-             for ($i=1;$i<=1;$i++)
-             {
-             $sql1="Insert Into screens (id, name, width, height, orientation, X, Y, Wallid) values ('$i','screen.$i',935,525, 'H',900,0,'$wid')";
                         mysqli_query($dbcon,$sql1);
-                        }
+                        mysqli_query($dbcon,$sql2);
+                        mysqli_query($dbcon,$sql3);
+                        mysqli_query($dbcon,$sql4);
            $url='http://localhost/WebPortal/wallcomposer.php';
    echo '<META HTTP-EQUIV=REFRESH CONTENT="1; '.$url.'">';
 
@@ -507,7 +511,7 @@ function  sWall(){
          sort($wx);
          sort($wy);
          
-        // echo'<script> alert("calculate");</script>';
+       
          
          $xstart = $wx[0];
          $xend = $wx[sizeof($wx)-1];
@@ -517,7 +521,7 @@ function  sWall(){
          //echo'<script> alert("ystart='.$ystart.'yend='.$yend.'");</script>';
          $wwidth = $xend - $xstart;
          $wheight = $yend - $ystart;
-         //echo'<script> alert("w='.$wwidth.'h='.$wheight.'");</script>';
+      
          
          $sql = "UPDATE `walls` SET `width`=$wwidth,`height`=$wheight, `X`=$xstart, `Y`=$ystart WHERE `id`=$wallid";
          mysqli_query($dbcon,$sql); 
